@@ -156,7 +156,7 @@ class OrdersTest(TestCase):
                               )
 
         self.assertEquals(res.status_code, 200)
-        result = json.loads(res.content)
+        result = json.loads(res.content)["data"]
         self.assertEquals(len(result), 2)  # 2 records
         self.assertTrue(result[0]["id"] == id1 or result[1]["id"] == id1)
         self.assertTrue(result[0]["id"] == id2 or result[1]["id"] == id2)
@@ -166,7 +166,7 @@ class OrdersTest(TestCase):
                               HTTP_AUTHORIZATION=f'Bearer {token}'
                               )
         self.assertEquals(res.status_code, 200)
-        result = json.loads(res.content)
+        result = json.loads(res.content)["data"]
         self.assertEquals(result["date"], '2020-01-01')
         self.assertEquals(result["item"], 'Hard Drive')
         self.assertEquals(result["price"], 5)

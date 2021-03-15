@@ -10,6 +10,10 @@ import datetime, pytz
 
 def serialize_order(order):
     serialized = model_to_dict(order)
+    serialized["date"] = str(order.date)
+    serialized["amount"] = float(order.amount)
+    serialized["price"] = float(order.price)
+    serialized["quantity"] = float(order.quantity)
     return serialized
 
 
@@ -17,6 +21,11 @@ def serialize_order(order):
 def orders(request):
     if request.user.is_anonymous:
         return HttpResponse(json.dumps({"detail": "Not authorized"}), status=status.HTTP_401_UNAUTHORIZED)
+
+    if request.method == "GET":
+        orders = Order.objects.all()
+        orders = [serialize_order(order) for order in orders]
+        return HttpResponse(json.dumps({"data": orders}), status=status.HTTP_200_OK)
 
     if request.method == "POST":
         errors = []
@@ -80,5 +89,13 @@ def orders(request):
 def order(request, order_id):
     if request.user.is_anonymous:
         return HttpResponse(json.dumps({"detail": "Not authorized"}), status=status.HTTP_401_UNAUTHORIZED)
+
+    try:
+        order = Order.objects.get(pk=order_id)
+    except ObjectDoesNotExist:
+        return HttpResponse(json.dumps({"detail": "Not found"}), status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == "GET":
+        return HttpResponse(json.dumps({"data": serialize_order(order)}), status=status.HTTP_200_OK)
 
     return HttpResponse(json.dumps({"detail": "Wrong method"}), status=status.HTTP_501_NOT_IMPLEMENTED)

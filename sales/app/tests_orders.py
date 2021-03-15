@@ -119,3 +119,57 @@ class NotesTest(TestCase):
         self.assertEquals(res.status_code, 201)
         result = json.loads(res.content)["data"]
         self.assertEquals(result["amount"], 35)  # should be calculated
+
+    #  -------------------------- GET RECORDS -------------------------------------------
+
+    def test_get_records(self):
+        token = self.get_token()
+        res = self.client.post('/api/orders/',
+                               data=json.dumps({
+                                   'date': "2020-01-01",
+                                   'item': "Hard Drive",
+                                   'price': 5,
+                                   'quantity': 7,
+                               }),
+                               content_type='application/json',
+                               HTTP_AUTHORIZATION=f'Bearer {token}'
+                               )
+        self.assertEquals(res.status_code, 201)
+        id1 = json.loads(res.content)["data"]["id"]
+
+        res = self.client.post('/api/orders/',
+                               data=json.dumps({
+                                   'date': "2020-02-02",
+                                   'item': "Monitor",
+                                   'price': 20,
+                                   'quantity': 30,
+                               }),
+                               content_type='application/json',
+                               HTTP_AUTHORIZATION=f'Bearer {token}'
+                               )
+        self.assertEquals(res.status_code, 201)
+        id2 = json.loads(res.content)["data"]["id"]
+
+        res = self.client.get('/api/orders/',
+                              content_type='application/json',
+                              HTTP_AUTHORIZATION=f'Bearer {token}'
+                              )
+
+        self.assertEquals(res.status_code, 200)
+        result = json.loads(res.content)
+        self.assertEquals(len(result), 2)  # 2 records
+        self.assertTrue(result[0]["id"] == id1 or result[1]["id"] == id1)
+        self.assertTrue(result[0]["id"] == id2 or result[1]["id"] == id2)
+
+        res = self.client.get(f'/api/orders/{id1}/',
+                              content_type='application/json',
+                              HTTP_AUTHORIZATION=f'Bearer {token}'
+                              )
+        self.assertEquals(res.status_code, 200)
+        result = json.loads(res.content)
+        self.assertEquals(result["date"], '2020-01-01')
+        self.assertEquals(result["item"], 'Hard Drive')
+        self.assertEquals(result["price"], 5)
+        self.assertEquals(result["quantity"], 7)
+        self.assertEquals(result["amount"], 35)
+

@@ -10,7 +10,6 @@ import datetime, pytz
 
 def serialize_order(order):
     serialized = model_to_dict(order)
-    serialized["amount_plus_one"] = order.amount + 1
     return serialized
 
 

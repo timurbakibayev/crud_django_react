@@ -5,7 +5,7 @@ import json
 test_user = {"username": "testuser", "password": "testpassword"}
 
 
-class NotesTest(TestCase):
+class OrdersTest(TestCase):
     def setUp(self):
         new_user = User.objects.create(username=test_user["username"])
         new_user.set_password(test_user["password"])

@@ -23,8 +23,8 @@ class NotesTest(TestCase):
         self.assertTrue("access" in result)
         return result["access"]
 
-    def test_add_sales_forbidden(self):
-        res = self.client.post('/api/sales/',
+    def test_add_orders_forbidden(self):
+        res = self.client.post('/api/orders/',
                                data=json.dumps({
                                    'date': "2020-01-01",
                                    'item': "Hard Drive",
@@ -34,7 +34,7 @@ class NotesTest(TestCase):
                                content_type='application/json',
                                )
         self.assertEquals(res.status_code, 401)
-        res = self.client.post('/api/sales/',
+        res = self.client.post('/api/orders/',
                                data=json.dumps({
                                    'date': "2020-01-01",
                                    'item': "Hard Drive",
@@ -46,9 +46,9 @@ class NotesTest(TestCase):
                                )
         self.assertEquals(res.status_code, 401)
 
-    def test_add_sales_ok(self):
+    def test_add_orders_ok(self):
         token = self.get_token()
-        res = self.client.post('/api/sales/',
+        res = self.client.post('/api/orders/',
                                data=json.dumps({
                                    'date': "2020-01-01",
                                    'item': "Hard Drive",
@@ -65,9 +65,9 @@ class NotesTest(TestCase):
         self.assertEquals(result["price"], 100)
         self.assertEquals(result["quantity"], 10)
 
-    def test_add_sales_wrong_data(self):
+    def test_add_orders_wrong_data(self):
         token = self.get_token()
-        res = self.client.post('/api/sales/',
+        res = self.client.post('/api/orders/',
                                data=json.dumps({
                                    'date': "2020-01-01",
                                    'item': "Hard Drive",
@@ -79,7 +79,7 @@ class NotesTest(TestCase):
                                )
         self.assertEquals(res.status_code, 400)
 
-        res = self.client.post('/api/sales/',
+        res = self.client.post('/api/orders/',
                                data=json.dumps({
                                    'date': "2020-01-01",
                                    'item': "Hard Drive",
@@ -91,7 +91,7 @@ class NotesTest(TestCase):
                                )
         self.assertEquals(res.status_code, 400)
 
-        res = self.client.post('/api/sales/',
+        res = self.client.post('/api/orders/',
                                data=json.dumps({
                                    'date': "2020-01-01",
                                    'item': "",
@@ -103,9 +103,9 @@ class NotesTest(TestCase):
                                )
         self.assertEquals(res.status_code, 400)
 
-    def test_add_sales_calculate(self):
+    def test_add_orders_calculate(self):
         token = self.get_token()
-        res = self.client.post('/api/sales/',
+        res = self.client.post('/api/orders/',
                                data=json.dumps({
                                    'date': "2020-01-01",
                                    'item': "Hard Drive",

@@ -173,3 +173,59 @@ class OrdersTest(TestCase):
         self.assertEquals(result["quantity"], 7)
         self.assertEquals(result["amount"], 35)
 
+
+    #  -------------------------- PUT AND DELETE RECORDS --------------------------------------
+
+    def test_put_delete_records(self):
+        token = self.get_token()
+        res = self.client.post('/api/orders/',
+                               data=json.dumps({
+                                   'date': "2020-01-01",
+                                   'item': "Hard Drive",
+                                   'price': 5,
+                                   'quantity': 7,
+                               }),
+                               content_type='application/json',
+                               HTTP_AUTHORIZATION=f'Bearer {token}'
+                               )
+        self.assertEquals(res.status_code, 201)
+        id = json.loads(res.content)["data"]["id"]
+
+        res = self.client.put(f'/api/orders/{id}/',
+                               data=json.dumps({
+                                   'date': "2020-02-02",
+                                   'item': "Monitor",
+                                   'price': 50,
+                                   'quantity': 70,
+                               }),
+                               content_type='application/json',
+                               HTTP_AUTHORIZATION=f'Bearer {token}'
+                               )
+
+        self.assertEquals(res.status_code, 200)
+        result = json.loads(res.content)["data"]
+        self.assertEquals(result["date"], '2020-02-02')
+
+        res = self.client.get(f'/api/orders/{id}/',
+                              content_type='application/json',
+                              HTTP_AUTHORIZATION=f'Bearer {token}'
+                              )
+        self.assertEquals(res.status_code, 200)
+        result = json.loads(res.content)["data"]
+        self.assertEquals(result["date"], '2020-02-02')
+        self.assertEquals(result["item"], 'Monitor')
+        self.assertEquals(result["price"], 50)
+        self.assertEquals(result["quantity"], 70)
+        self.assertEquals(result["amount"], 3500)
+
+        res = self.client.delete(f'/api/orders/{id}/',
+                              content_type='application/json',
+                              HTTP_AUTHORIZATION=f'Bearer {token}'
+                              )
+        self.assertEquals(res.status_code, 410)  # Gone
+
+        res = self.client.get(f'/api/orders/{id}/',
+                              content_type='application/json',
+                              HTTP_AUTHORIZATION=f'Bearer {token}'
+                              )
+        self.assertEquals(res.status_code, 404)  # Not found

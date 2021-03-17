@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Order(models.Model):
     date = models.DateField(blank=False)
     item = models.CharField(max_length=100, blank=False)
@@ -9,3 +10,4 @@ class Order(models.Model):
 
     def __str__(self):
         return f"{self.date}: {self.item}"
+

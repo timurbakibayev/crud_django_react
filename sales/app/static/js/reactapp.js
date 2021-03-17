@@ -1,26 +1,24 @@
 'use strict';
 const e = React.createElement;
 
-class MyReactApp extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { liked: false };
-  }
+function Welcome(props) {
+  return <h1>Привет, {props.name}</h1>;
+}
 
-  render() {
-    if (this.state.liked) {
-      return 'You liked this.';
-    }
-
-    swal("Hello world!");
-
-    return e(
-      'button',
-      { onClick: () => this.setState({ liked: true }) },
-      'Like'
-    );
-  }
+function App() {
+  console.log("In da app")
+  return (
+    <div>
+      <Welcome name="Алиса" />
+      <Welcome name="Базилио" />
+      <Welcome name="Буратино" />
+    </div>
+  );
 }
 
 const domContainer = document.querySelector('#reactAppContainer');
-ReactDOM.render(e(MyReactApp), domContainer);
+ReactDOM.render(
+  e(App),
+  domContainer
+);
+// ReactDOM.render(e(MyReactApp), domContainer);

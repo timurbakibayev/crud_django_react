@@ -5,7 +5,12 @@
   <title>Title</title>
 </head>
 <body>
-  <h1>Home page</h1>
-  <script src="/static/js/auth.js"></script>
+  <div id="reactAppContainer"></div>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+{#  <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>#}
+{#  <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>#}
+  <script type="module" src="/static/js/reactapp.js"></script>
 </body>
 </html>

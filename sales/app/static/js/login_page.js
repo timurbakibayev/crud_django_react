@@ -6,23 +6,21 @@ function App() {
   const [password, setPassword] = React.useState("");
   const [message, setMessage] = React.useState("");
 
-  const success = (text)=> {
-    console.log("Yeah!");
-  };
-
-  const fail = (text)=> {
-    setMessage("Failed to login");
+  const success = async (text)=> {
+    console.log("Yeah! Authenticated!");
+    await localStorage.setItem("salesToken", text.access);
+    window.location = "/";
   };
 
   const tryLogin = async (e) => {
     e.preventDefault();
     console.log("Loggin in with", username, password);
-    await login_api(username, password, success, fail);
+    await login_api(username, password, success, (text)=>{setMessage(text)});
   };
 
   return (
       <div style={{width: "400px", margin: "auto", marginTop: "200px",
-        boxShadow: "2px 5px 2px 2px #cccccccc",
+        boxShadow: "5px 5px 20px #cccccccc",
         padding: "1em"
                 }}>
         <form>

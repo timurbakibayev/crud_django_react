@@ -3,7 +3,6 @@ const e = React.createElement;
 
 function App() {
   const [list, setList] = React.useState([]);
-  const [text, setText] = React.useState("123");
 
   const success = (data) => {
     setList(data.data);

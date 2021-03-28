@@ -3,7 +3,18 @@ const e = React.createElement;
 
 function App() {
   const [text, setText] = React.useState("123");
-  console.log("In da app");
+
+  const getData = async ()=>{
+    const serializedCredentials = localStorage.getItem("salesLogin");
+    console.log(serializedCredentials);
+    if (serializedCredentials === null) {
+      console.log("No credentials found, redirecting...");
+      window.location = "/login";
+    }
+  };
+
+  getData();
+
   return (
     <div>
       <Welcome name="Hello" />

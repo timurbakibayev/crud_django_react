@@ -4,9 +4,20 @@ const e = React.createElement;
 function App() {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [message, setMessage] = React.useState("");
+
+  const success = (text)=> {
+    console.log("Yeah!");
+  };
+
+  const fail = (text)=> {
+    setMessage("Failed to login");
+  };
+
   const tryLogin = async (e) => {
     e.preventDefault();
     console.log("Loggin in with", username, password);
+    await login_api(username, password, success, fail);
   };
 
   return (
@@ -25,6 +36,7 @@ function App() {
             <input type="password" className="form-control" id="password" placeholder="password"
               onChange={(e)=>{setPassword(e.target.value)}} value={password}/>
           </div>
+          <div style={{margin: "1em", color: "red"}}>{message}</div>
           <button type="submit" className="btn btn-primary" onClick={tryLogin}>Login</button>
         </form>
       </div>

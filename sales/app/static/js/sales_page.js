@@ -17,12 +17,7 @@ function App() {
     await get_data_api(0, success, (text)=>{console.log("Error: ", text)})
   };
 
-  React.useEffect(
-      ()=>{
-        getData();
-      },
-      []
-  );
+  React.useEffect(getData,[]);
 
   return (
     <div>
@@ -51,6 +46,7 @@ function App() {
             <th>Price</th>
             <th>Quantity</th>
             <th>Amount</th>
+            <th>Action</th>
           </tr>
           </thead>
           <tbody>
@@ -62,6 +58,7 @@ function App() {
               <td>{row.price}</td>
               <td>{row.quantity}</td>
               <td>{row.amount}</td>
+              <td>Edit</td>
             </tr>
           )}
           </tbody>

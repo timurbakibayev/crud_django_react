@@ -101,7 +101,7 @@ function App() {
 
   return (
     <div onKeyDown={keyDownHandler}>
-      <div style={{background: "#cccccccc"}}
+      <div style={{background: "#00000060"}}
           className={"modal " + (showModal?" show d-block":" d-none")} tabIndex="-1" role="dialog">
         <div className="modal-dialog shadow">
           <form method="post">

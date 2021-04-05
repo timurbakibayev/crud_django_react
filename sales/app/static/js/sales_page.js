@@ -101,8 +101,9 @@ function App() {
 
   return (
     <div onKeyDown={keyDownHandler}>
-      <div className={"modal " + (showModal?" show d-block":" d-none")} tabIndex="-1" role="dialog">
-        <div className="modal-dialog" style={{boxShadow: "8px 9px 7px 2px gray"}}>
+      <div style={{background: "#cccccccc"}}
+          className={"modal " + (showModal?" show d-block":" d-none")} tabIndex="-1" role="dialog">
+        <div className="modal-dialog shadow">
           <form method="post">
           <div className="modal-content">
             <div className="modal-header">
@@ -140,18 +141,14 @@ function App() {
       </div>
 
       <div style={{maxWidth: "800px", margin: "auto", marginTop: "1em", marginBottom: "1em",
-        boxShadow: "5px 5px 20px #cccccccc",
-        padding: "1em"
-                }}>
+                    padding: "1em"}} className="shadow">
         <div style={{display: "flex", flexDirection: "row"}}>
           <span>Super Sales App</span>
           <a className="btn btn-light" style={{marginLeft: "auto"}} onClick={logout}>Logout</a>
         </div>
       </div>
       <div style={{maxWidth: "800px", margin: "auto", marginTop: "1em", marginBottom: "1em",
-        boxShadow: "5px 5px 20px #cccccccc",
-        padding: "1em"
-                }}>
+                    padding: "1em"}} className="shadow">
         <div style={{display: "flex", flexDirection: "row", marginBottom: "5px"}}>
           <a className="btn btn-light" style={{marginLeft: "auto"}}
              onClick={newSale}

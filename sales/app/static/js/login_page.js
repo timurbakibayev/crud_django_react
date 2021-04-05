@@ -26,7 +26,7 @@ function App() {
         <form>
           <div className="mb-3">
             <label htmlFor="username" className="form-label">Username</label>
-            <input type="text" className="form-control" id="username" placeholder="username"
+            <input autoFocus type="text" className="form-control" id="username" placeholder="username"
               onChange={(e)=>{setUsername(e.target.value)}} value={username}/>
           </div>
           <div className="mb-3">

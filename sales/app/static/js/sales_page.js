@@ -20,8 +20,8 @@ function App() {
     window.location = "/login";
   };
 
-  const getData = async ()=>{
-    await get_sales_api(0, success, (text)=>{console.log("Error: ", text)})
+  const getData = ()=>{
+    get_sales_api(0, success, (text)=>{console.log("Error: ", text)});
   };
 
   const newSale = ()=>{
@@ -87,19 +87,24 @@ function App() {
     });
   };
 
-  React.useEffect(getData,[]);
+  const keyDownHandler = (e)=>{
+    if (e.which === 27)
+      setShowModal(false);
+    if (e.which === 78 && !showModal)
+      newSale();
+  };
+
+  React.useEffect(()=>{
+    getData();
+    document.addEventListener('keydown', keyDownHandler);
+  },[]);
 
   return (
-    <div>
+    <div onKeyDown={keyDownHandler}>
       <div className={"modal " + (showModal?" show d-block":" d-none")} tabIndex="-1" role="dialog">
         <div className="modal-dialog" style={{boxShadow: "8px 9px 7px 2px gray"}}>
           <form method="post">
-          <div className="modal-content" onKeyDown={
-            (e)=>{
-            if (e.which === 27)
-              setShowModal(false);
-            }
-          }>
+          <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title">{modalDescription}</h5>
               <button type="button" className="btn-close" onClick={()=>{setShowModal(false)}} aria-label="Close"></button>

@@ -152,7 +152,7 @@ function App() {
         <div style={{display: "flex", flexDirection: "row", marginBottom: "5px"}}>
           <a className="btn btn-light" style={{marginLeft: "auto"}}
              onClick={newSale}
-          >New Sale</a>
+          >New Sales Order</a>
         </div>
         <table className="table table-hover caption-top">
           <thead className="table-light">

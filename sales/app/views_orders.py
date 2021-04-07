@@ -77,9 +77,16 @@ def orders(request):
         return HttpResponse(json.dumps({"detail": "Not authorized"}), status=status.HTTP_401_UNAUTHORIZED)
 
     if request.method == "GET":
-        orders = Order.objects.all()
-        orders = [serialize_order(order) for order in orders]
-        return HttpResponse(json.dumps({"data": orders}), status=status.HTTP_200_OK)
+        orders_data = Order.objects.all()
+
+        orders_count = orders_data.count()
+
+        page_size = int(request.GET.get("page_size", "1000"))
+        page_no = int(request.GET.get("page_no", "0"))
+        orders_data = list(orders_data[page_no * page_size:page_no * page_size + page_size])
+
+        orders_data = [serialize_order(order) for order in orders_data]
+        return HttpResponse(json.dumps({"count": orders_count, "data": orders_data}), status=status.HTTP_200_OK)
 
     if request.method == "POST":
         order = Order()

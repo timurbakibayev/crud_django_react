@@ -25,7 +25,7 @@ const login_api = async (username, password, success, fail) => {
   }
 };
 
-const get_sales_api = async (pageNo="", success, fail) => {
+const get_orders_api = async (pageNo="", success, fail) => {
   const token = await localStorage.getItem("salesToken");
   if (token === null) {
     console.log("No credentials found, redirecting...");
@@ -59,7 +59,7 @@ const get_sales_api = async (pageNo="", success, fail) => {
   }
 };
 
-const post_sale_api = async (data, success) => {
+const post_order_api = async (data, success) => {
   const token = await localStorage.getItem("salesToken");
   if (token === null) {
     console.log("No credentials found, redirecting...");
@@ -94,7 +94,7 @@ const post_sale_api = async (data, success) => {
   }
 };
 
-const put_sale_api = async (saleId, data, success) => {
+const put_order_api = async (saleId, data, success) => {
   const token = await localStorage.getItem("salesToken");
   if (token === null) {
     console.log("No credentials found, redirecting...");
@@ -129,7 +129,7 @@ const put_sale_api = async (saleId, data, success) => {
   }
 };
 
-const delete_sale_api = async (saleId, success) => {
+const delete_order_api = async (saleId, success) => {
   const token = await localStorage.getItem("salesToken");
   if (token === null) {
     console.log("No credentials found, redirecting...");

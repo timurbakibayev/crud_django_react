@@ -21,11 +21,11 @@ function App() {
   };
 
   const getData = ()=>{
-    get_sales_api(0, success, (text)=>{console.log("Error: ", text)});
+    get_orders_api(0, success, (text)=>{console.log("Error: ", text)});
   };
 
-  const newSale = ()=>{
-    setModalDescription("New sale");
+  const newOrder = ()=>{
+    setModalDescription("New order");
     setItemId(null);
     setItem("");
     setPrice(0);
@@ -36,8 +36,8 @@ function App() {
     setTimeout(()=>{itemInput && itemInput.focus()}, 1);
   };
 
-  const editSale = (data)=>{
-    setModalDescription("New sale");
+  const editOrder = (data)=>{
+    setModalDescription("New order");
     setItemId(data.id);
     setItem(data.item);
     setPrice(data.price);
@@ -48,7 +48,7 @@ function App() {
     setTimeout(()=>{itemInput && itemInput.focus()}, 1);
   };
 
-  const saveSale = (e)=>{
+  const saveOrder = (e)=>{
     e.preventDefault();
     setError("");
     console.log("saving new", item, price, quantity);
@@ -56,14 +56,14 @@ function App() {
       setError("Please enter item name, price and quantity");
     else {
       if (itemId === null)
-        post_sale_api({item, price, quantity}, ()=>{getData();});
+        post_order_api({item, price, quantity}, ()=>{getData();});
       else
-        put_sale_api(itemId, {item, price, quantity}, ()=>{getData();});
+        put_order_api(itemId, {item, price, quantity}, ()=>{getData();});
       setShowModal(false);
     }
   };
 
-  const deleteSale = (saleId)=>{
+  const deleteOrder = (orderId)=>{
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -74,10 +74,10 @@ function App() {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        delete_sale_api(saleId, ()=>{
+        delete_order_api(orderId, ()=>{
           Swal.fire({
               title: 'Deleted!',
-              text: "Your sale has been deleted!",
+              text: "Your order has been deleted!",
               icon: 'success',
               timer: 1000,
           });
@@ -91,7 +91,7 @@ function App() {
     if (e.which === 27)
       setShowModal(false);
     if (e.which === 78 && !showModal)
-      newSale();
+      newOrder();
   };
 
   React.useEffect(()=>{
@@ -133,7 +133,7 @@ function App() {
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" onClick={()=>{setShowModal(false)}} data-bs-dismiss="modal">Close</button>
-              <button type="submit" className="btn btn-primary" onClick={saveSale}>Save changes</button>
+              <button type="submit" className="btn btn-primary" onClick={saveOrder}>Save changes</button>
             </div>
           </div>
           </form>
@@ -143,7 +143,7 @@ function App() {
       <div style={{maxWidth: "800px", margin: "auto", marginTop: "1em", marginBottom: "1em",
                     padding: "1em"}} className="shadow">
         <div style={{display: "flex", flexDirection: "row"}}>
-          <span>Super Sales App</span>
+          <span>Super Orders App</span>
           <a className="btn btn-light" style={{marginLeft: "auto"}} onClick={logout}>Logout</a>
         </div>
       </div>
@@ -151,8 +151,8 @@ function App() {
                     padding: "1em"}} className="shadow">
         <div style={{display: "flex", flexDirection: "row", marginBottom: "5px"}}>
           <a className="btn btn-light" style={{marginLeft: "auto"}}
-             onClick={newSale}
-          >New Sales Order</a>
+             onClick={newOrder}
+          >New Orders Order</a>
         </div>
         <table className="table table-hover caption-top">
           <thead className="table-light">
@@ -177,9 +177,9 @@ function App() {
               <td>{row.amount}</td>
               <td>
                 <a className="btn btn-light" style={{marginLeft: "auto"}}
-                  onClick={(e)=>{editSale(row)}}>Edit</a>{" "}
+                  onClick={(e)=>{editOrder(row)}}>Edit</a>{" "}
                 <a className="btn btn-light" style={{marginLeft: "auto"}}
-                  onClick={(e)=>{deleteSale(row.id)}}>Delete</a>
+                  onClick={(e)=>{deleteOrder(row.id)}}>Delete</a>
               </td>
             </tr>
           )}

@@ -33,7 +33,7 @@ const get_orders_api = async (pageNo="", success, fail) => {
     return [];
   }
   const response = await fetch(
-        `/api/orders/?page=${pageNo}`,
+        `/api/orders/?page_no=${pageNo}`,
         {
             method: 'GET',
             headers: {

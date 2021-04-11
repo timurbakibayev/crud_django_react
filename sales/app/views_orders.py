@@ -81,7 +81,7 @@ def orders(request):
 
         orders_count = orders_data.count()
 
-        page_size = int(request.GET.get("page_size", "1000"))
+        page_size = int(request.GET.get("page_size", "10"))
         page_no = int(request.GET.get("page_no", "0"))
         orders_data = list(orders_data[page_no * page_size:page_no * page_size + page_size])
 

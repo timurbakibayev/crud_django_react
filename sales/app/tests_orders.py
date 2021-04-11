@@ -25,25 +25,25 @@ class OrdersTest(TestCase):
 
     def test_add_orders_forbidden(self):
         res = self.client.post('/api/orders/',
-                               data=json.dumps({
-                                   'date': "2020-01-01",
-                                   'item': "Hard Drive",
-                                   'price': 100,
-                                   'quantity': 10,
-                               }),
-                               content_type='application/json',
-                               )
+           data=json.dumps({
+               'date': "2020-01-01",
+               'item': "Hard Drive",
+               'price': 100,
+               'quantity': 10,
+           }),
+           content_type='application/json',
+           )
         self.assertEquals(res.status_code, 401)
         res = self.client.post('/api/orders/',
-                               data=json.dumps({
-                                   'date': "2020-01-01",
-                                   'item': "Hard Drive",
-                                   'price': 100,
-                                   'quantity': 10,
-                               }),
-                               content_type='application/json',
-                               HTTP_AUTHORIZATION=f'Bearer WRONG TOKEN'
-                               )
+           data=json.dumps({
+               'date': "2020-01-01",
+               'item': "Hard Drive",
+               'price': 100,
+               'quantity': 10,
+           }),
+           content_type='application/json',
+           HTTP_AUTHORIZATION=f'Bearer WRONG TOKEN'
+           )
         self.assertEquals(res.status_code, 401)
 
     def test_add_orders_ok(self):

@@ -5,7 +5,7 @@ from django.forms.models import model_to_dict
 from django.core.exceptions import ObjectDoesNotExist
 from app.models import Order
 import json
-import datetime, pytz
+import datetime
 
 
 def serialize_order(order):
